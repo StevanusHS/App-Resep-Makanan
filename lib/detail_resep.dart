@@ -1,4 +1,5 @@
 import 'package:app_menu_makanan/daftar_resep.dart';
+import 'package:app_menu_makanan/resep_saya.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -43,7 +44,8 @@ class DetailRecipePage extends StatelessWidget {
             icon: Icon(Icons.favorite_border),
             onPressed: () {
               // Aksi saat tombol like/love diklik
-              print('Like/love button clicked');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MyRecipe()));
             },
           ),
         ],
@@ -55,7 +57,7 @@ class DetailRecipePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: Image.asset(
-                'assets/images/logo-resep.png',
+                'assets/images/nasgor.png',
                 height: 240,
                 fit: BoxFit.cover,
               ),

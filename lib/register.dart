@@ -1,3 +1,4 @@
+import 'package:app_menu_makanan/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_menu_makanan/main.dart';
 
@@ -70,6 +71,10 @@ class RegisterPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Implementasi fungsi register di sini
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyHomePage()));
               },
               child: const Text('Register'),
               style: ElevatedButton.styleFrom(
@@ -81,7 +86,7 @@ class RegisterPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MyApp()));
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
               },
               child: const Text('Sudah punya akun? Login'),
             ),

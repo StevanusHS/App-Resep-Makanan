@@ -35,89 +35,99 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        // Menggunakan SingleChildScrollView
-        child: Container(
-          padding: const EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Form(
-            key: _formKey, // Menggunakan kunci FormState
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/logo-resep.png', // Ganti dengan path gambar logo
-                  width: 200,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
                 ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/images/logo-resep.png',
+                        width: 200,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Email harus diisi!';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                        enableInteractiveSelection: false,
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Password harus diisi!';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MyHomePage(),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Login'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () {
+                          // Implementasi fungsi lupa password di sini
+                        },
+                        child: const Text('Lupa Password?'),
+                      ),
+                      const SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterPage(),
+                            ),
+                          );
+                        },
+                        child: const Text('Belum punya akun? Daftar'),
+                      ),
+                    ],
                   ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return 'Email harus diisi!';
-                    }
-                    return null;
-                  },
                 ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
-                  enableInteractiveSelection: false,
-                  obscureText: true,
-                  obscuringCharacter: "*",
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return 'Password harus diisi!';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Aksi yang diambil jika formulir valid
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MyHomePage()));
-                    }
-                  },
-                  child: const Text('Login'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors
-                        .green, // Mengubah warna latar belakang button menjadi hijau
-                  ),
-                ),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    // Implementasi fungsi lupa password di sini
-                  },
-                  child: const Text('Lupa Password?'),
-                ),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterPage()));
-                  },
-                  child: const Text('Belum punya akun? Daftar'),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
