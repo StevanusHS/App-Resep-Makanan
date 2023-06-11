@@ -1,3 +1,4 @@
+import 'package:app_menu_makanan/daftar_resep.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,10 +28,13 @@ class DetailRecipePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi saat tombol kembali diklik
-            print('Kembali button clicked');
+            // Aksi saat tombol close diklik
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DaftarRecipe()),
+            );
           },
         ),
         title: const Text('Detail'),

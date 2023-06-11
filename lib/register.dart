@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_menu_makanan/main.dart';
 
 void main() {
   runApp(const MyApp());
@@ -79,7 +80,8 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyApp()));
               },
               child: const Text('Sudah punya akun? Login'),
             ),

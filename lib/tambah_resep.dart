@@ -1,5 +1,7 @@
+import 'package:app_menu_makanan/daftar_resep.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:app_menu_makanan/homePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,10 +54,13 @@ class _AddRecipePageState extends State<AddRecipePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {
             // Aksi saat tombol close diklik
-            print('Close button clicked');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MyHomePage()),
+            );
           },
         ),
         title: const Text('Tambah Resep'),

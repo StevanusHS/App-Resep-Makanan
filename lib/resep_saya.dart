@@ -1,4 +1,8 @@
+import 'package:app_menu_makanan/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:app_menu_makanan/daftar_resep.dart';
+import 'package:app_menu_makanan/profile.dart';
+import 'package:app_menu_makanan/tambah_resep.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,19 +18,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(),
+      home: const MyRecipe(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyRecipe extends StatefulWidget {
+  const MyRecipe({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  // ignore: library_private_types_in_public_api
+  _MyRecipeState createState() => _MyRecipeState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyRecipeState extends State<MyRecipe> {
   String selectedCategory = 'All';
 
   @override
@@ -52,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'Cari resep kamu',
@@ -79,98 +84,50 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 240,
               child: ListView(
-                padding: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 20, right: 10),
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      // Aksi saat card diklik
-                      print('Card 1 clicked');
-                    },
-                    child: Container(
-                      width: 180,
-                      margin: const EdgeInsets.only(right: 10),
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Aksi saat card diklik
+                        print('Card 1 clicked');
+                      },
                       child: Card(
-                        child: Stack(
+                        child: Column(
                           children: [
-                            Column(
-                              children: [
-                                Image.asset(
-                                  'assets/images/logo-resep.png',
-                                  width: 120,
-                                  height: 120,
-                                ),
-                                const SizedBox(height: 10),
-                                const Text('Nasi Goreng'),
-                              ],
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
                             ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: PopupMenuButton<String>(
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem<String>(
-                                      value: 'edit',
-                                      child: const Text('Edit Menu'),
-                                    ),
-                                  ];
-                                },
-                                onSelected: (String value) {
-                                  if (value == 'edit') {
-                                    // Aksi saat menu edit dipilih
-                                    print('Edit menu clicked');
-                                  }
-                                },
-                              ),
-                            ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      // Aksi saat card diklik
-                      print('Card 2 clicked');
-                    },
-                    child: Container(
-                      width: 180,
-                      margin: const EdgeInsets.only(right: 10),
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Aksi saat card diklik
+                        print('Card 2 clicked');
+                      },
                       child: Card(
-                        child: Stack(
+                        child: Column(
                           children: [
-                            Column(
-                              children: [
-                                Image.asset(
-                                  'assets/images/logo-resep.png',
-                                  width: 120,
-                                  height: 120,
-                                ),
-                                const SizedBox(height: 10),
-                                const Text('Nasi Goreng'),
-                              ],
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
                             ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: PopupMenuButton<String>(
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem<String>(
-                                      value: 'edit',
-                                      child: const Text('Edit Menu'),
-                                    ),
-                                  ];
-                                },
-                                onSelected: (String value) {
-                                  if (value == 'edit') {
-                                    // Aksi saat menu edit dipilih
-                                    print('Edit menu clicked');
-                                  }
-                                },
-                              ),
-                            ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
                           ],
                         ),
                       ),
@@ -184,51 +141,107 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 240,
               child: ListView(
-                padding: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 20, right: 10),
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      // Aksi saat card diklik
-                      print('Card 3 clicked');
-                    },
-                    child: Container(
-                      width: 180,
-                      margin: const EdgeInsets.only(right: 10),
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Aksi saat card diklik
+                        print('Card 3 clicked');
+                      },
                       child: Card(
-                        child: Stack(
+                        child: Column(
                           children: [
-                            Column(
-                              children: [
-                                Image.asset(
-                                  'assets/images/logo-resep.png',
-                                  width: 120,
-                                  height: 120,
-                                ),
-                                const SizedBox(height: 10),
-                                const Text('Nasi Goreng'),
-                              ],
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
                             ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: PopupMenuButton<String>(
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem<String>(
-                                      value: 'edit',
-                                      child: const Text('Edit Menu'),
-                                    ),
-                                  ];
-                                },
-                                onSelected: (String value) {
-                                  if (value == 'edit') {
-                                    // Aksi saat menu edit dipilih
-                                    print('Edit menu clicked');
-                                  }
-                                },
-                              ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Aksi saat card diklik
+                        print('Card 4 clicked');
+                      },
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
                             ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Tambahkan card menu lainnya di sini
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 240,
+              child: ListView(
+                padding: const EdgeInsets.only(left: 20, right: 10),
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Aksi saat card diklik
+                        print('Card 5 clicked');
+                      },
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Aksi saat card diklik
+                        print('Card 6 clicked');
+                      },
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
                           ],
                         ),
                       ),
@@ -251,35 +264,47 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.home, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol home diklik
-                print('Home button clicked');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
               },
             ),
             IconButton(
               icon: Icon(Icons.restaurant_menu, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol restaurant_menu diklik
-                print('Restaurant menu button clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DaftarRecipe()),
+                );
               },
             ),
             IconButton(
               icon: Icon(Icons.add, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol add diklik
-                print('Add button clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddRecipePage()),
+                );
               },
             ),
             IconButton(
               icon: Icon(Icons.receipt, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol receipt diklik
-                print('Receipt button clicked');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyRecipe()));
               },
             ),
             IconButton(
               icon: Icon(Icons.person, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol person diklik
-                print('Person button clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
               },
             ),
           ],

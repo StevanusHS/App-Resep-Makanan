@@ -1,4 +1,10 @@
+import 'package:app_menu_makanan/edit_profile.dart';
+import 'package:app_menu_makanan/main.dart';
+import 'package:app_menu_makanan/tambah_resep.dart';
+import 'package:app_menu_makanan/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:app_menu_makanan/resep_saya.dart';
+import 'package:app_menu_makanan/daftar_resep.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +34,30 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profile'),
         backgroundColor: Colors.green, // Warna hijau pada bar atas
+        actions: [
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  "Logout",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () {
+                    // Aksi saat tombol search diklik
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -35,7 +65,7 @@ class ProfilePage extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.green, // Warna hijau pada bagian atas foto profil
+              color: Colors.white, // Warna hijau pada bagian atas foto profil
               child: Row(
                 children: [
                   CircleAvatar(
@@ -49,7 +79,9 @@ class ProfilePage extends StatelessWidget {
                       Text(
                         'Stevanus', // Nama pengguna
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green),
                       ),
                       Text(
                         'Seorang yang suka memasak', // Deskripsi diri
@@ -68,7 +100,11 @@ class ProfilePage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Aksi saat tombol Edit Profil diklik
-                    print('Edit Profil button clicked');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditProfilePage()),
+                    );
                   },
                   child: Text('Edit Profil'),
                   style: ElevatedButton.styleFrom(
@@ -94,57 +130,51 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 240,
               child: ListView(
-                padding: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 20, right: 10),
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  Expanded(
-                    flex: 1,
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
                     child: GestureDetector(
                       onTap: () {
                         // Aksi saat card diklik
                         print('Card 1 clicked');
                       },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
+                  Container(
+                    width: 180,
+                    margin: const EdgeInsets.only(right: 10),
                     child: GestureDetector(
                       onTap: () {
                         // Aksi saat card diklik
                         print('Card 2 clicked');
                       },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/nasgor.png',
+                              width: 120,
+                              height: 120,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Nasi Goreng'),
+                          ],
                         ),
                       ),
                     ),
@@ -166,35 +196,47 @@ class ProfilePage extends StatelessWidget {
               icon: Icon(Icons.home, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol home diklik
-                print('Home button clicked');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
               },
             ),
             IconButton(
               icon: Icon(Icons.restaurant_menu, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol restaurant_menu diklik
-                print('Restaurant menu button clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DaftarRecipe()),
+                );
               },
             ),
             IconButton(
               icon: Icon(Icons.add, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol add diklik
-                print('Add button clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddRecipePage()),
+                );
               },
             ),
             IconButton(
               icon: Icon(Icons.receipt, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol receipt diklik
-                print('Receipt button clicked');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyRecipe()));
               },
             ),
             IconButton(
               icon: Icon(Icons.person, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol person diklik
-                print('Person button clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
               },
             ),
           ],

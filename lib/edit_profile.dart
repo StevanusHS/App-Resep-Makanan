@@ -1,3 +1,4 @@
+import 'package:app_menu_makanan/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -55,7 +56,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
           icon: const Icon(Icons.close),
           onPressed: () {
             // Aksi saat tombol close diklik
-            print('Close button clicked');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           },
         ),
         title: const Text('Edit Profile'),

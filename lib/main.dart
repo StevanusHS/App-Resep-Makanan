@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app_menu_makanan/register.dart';
+import 'package:app_menu_makanan/homePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,293 +12,111 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Home',
+      title: 'Login',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.green, // Mengubah primarySwatch menjadi hijau
       ),
-      home: const MyHomePage(),
+      home: LoginPage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 200,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/logo-resep.png'),
-                    fit: BoxFit.cover,
+        // Menggunakan SingleChildScrollView
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Form(
+            key: _formKey, // Menggunakan kunci FormState
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'assets/images/logo-resep.png', // Ganti dengan path gambar logo
+                  width: 200,
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Email harus diisi!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                  enableInteractiveSelection: false,
+                  obscureText: true,
+                  obscuringCharacter: "*",
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Password harus diisi!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Aksi yang diambil jika formulir valid
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage()));
+                    }
+                  },
+                  child: const Text('Login'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors
+                        .green, // Mengubah warna latar belakang button menjadi hijau
                   ),
                 ),
-                child: Center(
-                  child: Text(
-                    'Hello, Stevanus',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    // Implementasi fungsi lupa password di sini
+                  },
+                  child: const Text('Lupa Password?'),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
-              child: Text(
-                'Resep Populer',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterPage()));
+                  },
+                  child: const Text('Belum punya akun? Daftar'),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 1 clicked');
-                      },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 2 clicked');
-                      },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 3 clicked');
-                      },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 4 clicked');
-                      },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 5 clicked');
-                      },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 6 clicked');
-                      },
-                      child: Container(
-                        width: 180,
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo-resep.png',
-                                width: 120,
-                                height: 120,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Nasi Goreng'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        height: 70,
-        color: Colors.green,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: Icon(Icons.home, color: Colors.white),
-              onPressed: () {
-                // Aksi saat tombol home diklik
-                print('Home button clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.restaurant_menu, color: Colors.white),
-              onPressed: () {
-                // Aksi saat tombol restaurant_menu diklik
-                print('Restaurant menu button clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.add, color: Colors.white),
-              onPressed: () {
-                // Aksi saat tombol add diklik
-                print('Add button clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.receipt, color: Colors.white),
-              onPressed: () {
-                // Aksi saat tombol receipt diklik
-                print('Receipt button clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.person, color: Colors.white),
-              onPressed: () {
-                // Aksi saat tombol person diklik
-                print('Person button clicked');
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
