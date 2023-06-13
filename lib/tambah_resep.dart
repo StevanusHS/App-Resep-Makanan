@@ -1,9 +1,15 @@
 import 'package:app_menu_makanan/daftar_resep.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:app_menu_makanan/homePage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'firebase_options.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -30,98 +36,118 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
-  late ImagePicker _imagePicker;
-  late PickedFile _pickedImage;
+  // Inisialisasi objek FlutterLocalNotificationsPlugin
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
+  final TextEditingController _recipeNameController = TextEditingController();
+  final TextEditingController _recipeDescriptionController =
+      TextEditingController();
+  final TextEditingController _userIdController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  
   @override
   void initState() {
     super.initState();
-    _imagePicker = ImagePicker();
+    // Konfigurasi inisialisasi pada initState
+    initNotifications();
   }
 
-  Future<void> _getImageFromGallery() async {
-    final pickedImage =
-        await _imagePicker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedImage != null) {
-        _pickedImage = pickedImage;
-      }
+    // Inisialisasi konfigurasi notifikasi
+  void initNotifications() {
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  Future<void> _saveToFirestore() async {
+    await _firestore.collection('recipes').add({
+      'recipe_name': _recipeNameController.text,
+      'recipe_description': _recipeDescriptionController.text,
+      'user_id': _userIdController.text,
     });
+
+    // Tampilkan local notification
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'channel_id',
+      'channel_name',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Resep berhasil ditambahkan',
+      'Selamat! Resep baru telah ditambahkan.',
+      platformChannelSpecifics,
+    );
+
+    // Reset form setelah menyimpan resep
+    _recipeNameController.clear();
+    _recipeDescriptionController.clear();
+    _userIdController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            // Aksi saat tombol close diklik
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MyHomePage()),
-            );
-          },
-        ),
-        title: const Text('Tambah Resep'),
-        backgroundColor: Colors.green, // Ubah warna bar atas menjadi hijau
-      ),
+          // ... existing AppBar code ...
+          ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Nama Resep',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Masukkan Nama Resep',
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Deskripsi Resep',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            TextFormField(
-              maxLines: 3,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Masukkan Deskripsi Resep',
-              ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed:
-                  _getImageFromGallery, // Mengubah aksi tombol "Foto Resep"
-              child: const Text(
-                  'Upload Gambar'), // Ubah teks tombol "Foto Resep" menjadi "Upload Gambar"
-              style: ElevatedButton.styleFrom(
-                primary: Colors
-                    .green, // Ubah warna tombol upload gambar menjadi hijau
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Aksi saat tombol "Simpan" diklik
-                  print('Simpan button clicked');
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(16.0),
-                  primary: Colors.green,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // User ID form field
+              TextFormField(
+                controller: _userIdController,
+                decoration: const InputDecoration(
+                  labelText: 'User ID',
+                  border: OutlineInputBorder(),
                 ),
-                child: const Text('Simpan', style: TextStyle(fontSize: 16)),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              // Recipe name form field
+              TextFormField(
+                controller: _recipeNameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nama Resep',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Recipe description form field
+              TextFormField(
+                controller: _recipeDescriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'Deskripsi Resep',
+                  border: OutlineInputBorder(),
+                ),
+                minLines: 3,
+                maxLines: 5,
+              ),
+              const SizedBox(height: 16),
+              // Existing Save button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await _saveToFirestore();
+                    print('Simpan button clicked');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(16.0),
+                    primary: Colors.green,
+                  ),
+                  child: const Text('Simpan', style: TextStyle(fontSize: 16)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -4,8 +4,12 @@ import 'package:app_menu_makanan/resep_saya.dart';
 import 'package:app_menu_makanan/tambah_resep.dart';
 import 'package:flutter/material.dart';
 import 'package:app_menu_makanan/detail_resep.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,8 +28,40 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<String> _recipeNames = [];
+  List<String> _recipeIds = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getRecipes();
+  }
+
+  Future<void> getRecipes() async {
+    QuerySnapshot snapshot = await _firestore.collection('recipes').limit(6).get();
+
+    List<String> names = snapshot.docs.map((doc) {
+      return doc['recipe_name'] as String;
+    }).toList();
+
+    List<String> ids = snapshot.docs.map((doc) {
+      return doc.id;
+    }).toList();
+
+    setState(() {
+      _recipeNames = names;
+      _recipeIds = ids;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,21 +107,23 @@ class MyHomePage extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               height: 240,
-              child: ListView(
+              child: ListView.builder(
                 padding: const EdgeInsets.only(left: 20, right: 10),
                 scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
+                itemCount: _recipeNames.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
                     width: 180,
                     margin: const EdgeInsets.only(right: 10),
                     child: GestureDetector(
                       onTap: () {
                         // Aksi saat card diklik
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailRecipePage()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailRecipePage(),
+                          ),
+                        );
                       },
                       child: Card(
                         child: Column(
@@ -96,173 +134,17 @@ class MyHomePage extends StatelessWidget {
                               height: 120,
                             ),
                             const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
+                            Text(_recipeNames[index]),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: 180,
-                    // margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailRecipePage()));
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
+                  );
+                },
               ),
             ),
             const SizedBox(height: 10),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 20, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailRecipePage()));
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailRecipePage()));
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 20, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailRecipePage()));
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const DetailRecipePage()));
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
+            // Tambahkan card menu lainnya di sini
           ],
         ),
       ),
@@ -276,8 +158,10 @@ class MyHomePage extends StatelessWidget {
               icon: Icon(Icons.home, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol home diklik
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                );
               },
             ),
             IconButton(
@@ -296,8 +180,7 @@ class MyHomePage extends StatelessWidget {
                 // Aksi saat tombol add diklik
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const AddRecipePage()),
+                  MaterialPageRoute(builder: (context) => const AddRecipePage()),
                 );
               },
             ),
@@ -305,8 +188,10 @@ class MyHomePage extends StatelessWidget {
               icon: Icon(Icons.receipt, color: Colors.white),
               onPressed: () {
                 // Aksi saat tombol receipt diklik
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MyRecipe()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyRecipe()),
+                );
               },
             ),
             IconButton(
