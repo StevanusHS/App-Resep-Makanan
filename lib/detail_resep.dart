@@ -1,114 +1,89 @@
-import 'package:app_menu_makanan/daftar_resep.dart';
-import 'package:app_menu_makanan/resep_saya.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+class DetailRecipePage extends StatefulWidget {
+  final String recipeId;
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const DetailRecipePage({Key? key, required this.recipeId}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Detail Resep',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const DetailRecipePage(),
-    );
-  }
+  _DetailRecipePageState createState() => _DetailRecipePageState();
 }
 
-class DetailRecipePage extends StatelessWidget {
-  const DetailRecipePage({super.key});
+class _DetailRecipePageState extends State<DetailRecipePage> {
+  late Future<DocumentSnapshot> _recipeDetail;
+
+  @override
+  void initState() {
+    super.initState();
+    _recipeDetail = FirebaseFirestore.instance
+        .collection('recipes')
+        .doc(widget.recipeId)
+        .get();
+  }
+
+  Future<void> deleteRecipe() async {
+    await FirebaseFirestore.instance
+        .collection('recipes')
+        .doc(widget.recipeId)
+        .delete();
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // Aksi saat tombol close diklik
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DaftarRecipe()),
-            );
-          },
-        ),
-        title: const Text('Detail'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.favorite_border),
-            onPressed: () {
-              // Aksi saat tombol like/love diklik
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const MyRecipe()));
-            },
-          ),
-        ],
+        title: const Text('Detail Resep'),
+        centerTitle: true,
+        backgroundColor: Colors.green,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Image.asset(
-                'assets/images/nasgor.png',
-                height: 240,
-                fit: BoxFit.cover,
+      body: FutureBuilder<DocumentSnapshot>(
+        future: _recipeDetail,
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text("Terjadi kesalahan");
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Image.asset('assets/images/nasgor.png', width: double.infinity, fit: BoxFit.cover),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${data['recipe_name']}",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "${data['recipe_description']}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: deleteRecipe,
+                    child: const Text('Hapus Resep'),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 16),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Nasi Goreng',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Deskripsi Resep',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Nasi goreng adalah salah satu makanan tradisional Indonesia yang terkenal di seluruh dunia. Makanan ini terbuat dari nasi yang digoreng bersama dengan berbagai bumbu dan bahan tambahan seperti sayuran, daging, atau seafood. Nasi goreng memiliki cita rasa yang gurih dan lezat, serta dapat disajikan sebagai hidangan utama atau sebagai lauk pendamping. Berikut adalah bahan-bahan yang dibutuhkan untuk membuat nasi goreng:',
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                '- Nasi putih\n- Bawang merah\n- Bawang putih\n- Cabai merah\n- Kecap manis\n- Garam\n- Merica\n- Daging ayam/sapi/udang (sesuai selera)\n- Sayuran (wortel, kacang polong, kol, dll.)\n- Telur\n- Minyak goreng',
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Berikut adalah langkah-langkah cara membuat nasi goreng:',
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                '1. Panaskan minyak goreng di wajan.\n2. Tumis bawang merah dan bawang putih hingga harum.\n3. Masukkan cabai merah dan daging ayam/sapi/udang, aduk hingga matang.\n4. Tambahkan sayuran dan aduk rata.\n5. Masukkan nasi putih, kecap manis, garam, dan merica. Aduk hingga bumbu merata dan nasi terasa hangat.\n6. Pindahkan nasi goreng ke piring saji dan tambahkan telur mata sapi di atasnya.\n7. Nasi goreng siap disajikan.',
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
-        ),
+            );
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

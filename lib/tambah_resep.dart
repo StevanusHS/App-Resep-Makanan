@@ -94,7 +94,8 @@ class _AddRecipePageState extends State<AddRecipePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // ... existing AppBar code ...
+            title: const Text('Tambah Resep'),
+            backgroundColor: Colors.green,
           ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
