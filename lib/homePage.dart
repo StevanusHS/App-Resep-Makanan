@@ -47,7 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> getRecipes() async {
-    QuerySnapshot snapshot = await _firestore.collection('recipes').limit(6).get();
+    QuerySnapshot snapshot =
+        await _firestore.collection('recipes').limit(6).get();
 
     List<String> names = snapshot.docs.map((doc) {
       return doc['recipe_name'] as String;
@@ -78,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/logo-resep.png'),
+                    image: AssetImage('assets/images/gambar-banner.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -97,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 20),
               child: Text(
-                'Resep Populer',
+                'Resep Masakan',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -121,7 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailRecipePage(recipeId: _recipeIds[index]),
+                            builder: (context) =>
+                                DetailRecipePage(recipeId: _recipeIds[index]),
                           ),
                         );
                       },
@@ -180,7 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 // Aksi saat tombol add diklik
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AddRecipePage()),
+                  MaterialPageRoute(
+                      builder: (context) => const AddRecipePage()),
                 );
               },
             ),

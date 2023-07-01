@@ -67,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
+                        //maxLength: 20, // Batasi input menjadi 20 karakter
                         decoration: const InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(),
@@ -110,13 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.green,
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextButton(
-                        onPressed: () {
-                          // Implementasi fungsi lupa password di sini
-                        },
-                        child: const Text('Lupa Password?'),
                       ),
                       const SizedBox(height: 10),
                       TextButton(

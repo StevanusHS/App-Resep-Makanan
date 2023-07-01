@@ -67,6 +67,8 @@ flutter:
     - assets/images/gambar-banner.jpg
     - assets/images/nasigoreng.jpeg
     - assets/images/nasgor.png
+    - assets/images/profile.jpg
+    - assets/images/ayam-geprek.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

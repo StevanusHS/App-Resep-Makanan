@@ -104,7 +104,7 @@ class _MyRecipeState extends State<MyRecipe> {
                               height: 120,
                             ),
                             const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
+                            const Text('Ayam Geprek'),
                           ],
                         ),
                       ),
@@ -127,121 +127,7 @@ class _MyRecipeState extends State<MyRecipe> {
                               height: 120,
                             ),
                             const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 20, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 3 clicked');
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 4 clicked');
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Tambahkan card menu lainnya di sini
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 240,
-              child: ListView(
-                padding: const EdgeInsets.only(left: 20, right: 10),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 5 clicked');
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 180,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Aksi saat card diklik
-                        print('Card 6 clicked');
-                      },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/nasgor.png',
-                              width: 120,
-                              height: 120,
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('Nasi Goreng'),
+                            const Text('Nasi Goreng Jawa'),
                           ],
                         ),
                       ),

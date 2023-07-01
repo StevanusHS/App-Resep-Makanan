@@ -45,7 +45,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
       TextEditingController();
   final TextEditingController _userIdController = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  
+
   @override
   void initState() {
     super.initState();
@@ -53,10 +53,12 @@ class _AddRecipePageState extends State<AddRecipePage> {
     initNotifications();
   }
 
-    // Inisialisasi konfigurasi notifikasi
+  // Inisialisasi konfigurasi notifikasi
   void initNotifications() {
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-    final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
@@ -94,9 +96,9 @@ class _AddRecipePageState extends State<AddRecipePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-            title: const Text('Tambah Resep'),
-            backgroundColor: Colors.green,
-          ),
+        title: const Text('Tambah Resep'),
+        backgroundColor: Colors.green,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

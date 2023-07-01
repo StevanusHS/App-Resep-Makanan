@@ -47,6 +47,7 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              //maxLength: 20,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -71,10 +72,8 @@ class RegisterPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Implementasi fungsi register di sini
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MyHomePage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
               },
               child: const Text('Register'),
               style: ElevatedButton.styleFrom(
